@@ -34,11 +34,10 @@ spec:
         - name: {{ .name | quote}}
           value: {{ .value | quote }}
         {{- end }}
-        {{- if .Values.command }}
         envFrom:
         {{- range (.Values.secretEnvs | default list)}}
         - {{ .secretRef }}:
-            name: {{ .secretName }}
+          name: {{ .secretName }}
         {{- end }}
         {{- if .Values.command }}
         command:
