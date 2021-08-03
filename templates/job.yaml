@@ -36,7 +36,7 @@ spec:
         {{- end }}
         envFrom:
         {{- range (.Values.secretEnvs | default list)}}
-        - {{ .secretRef }}:
+        - secretRef:
             name: {{ .secretName }}
         {{- end }}
         {{- if .Values.command }}
