@@ -1,6 +1,12 @@
-{{- include "common.configmap" (list . "job.configmap") -}}
-{{- define "job.configmap" -}}
-## Define overrides for your Configmap here.
-metadata:
-  namespace: {{ .Values.namespace }}
-{{- end -}}
+{{- if .Values.configMaps }}
+{{- range .Values.configMaps }}
+---
+apiVersion: v1
+kind: ConfigMap
+annotations:
+  name: {{ .name }}
+  data: {{ .data | toYaml | indent 2 }}
+...
+{{- end }}
+{{- end }}
+

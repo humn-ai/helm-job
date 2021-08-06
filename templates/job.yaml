@@ -36,10 +36,7 @@ spec:
         {{- end }}
         {{- if .Values.secretEnvs }}  
         envFrom:
-        {{- range (.Values.secretEnvs | default list)}}
-        - secretRef:
-            {{ . }}
-        {{- end }}
+        {{- .Values.secretEnvs | toYaml | nindent 8 }}
         {{- end }}
         {{- if .Values.command }}
         command:
@@ -74,4 +71,8 @@ spec:
 {{ toYaml . | indent 8 }}
       {{- end }}
       restartPolicy: {{ .Values.restartPolicy }}
+      {{- with .Values.volumes }}
+      volumes:
+{{ toYaml . | indent 6 }}
+      {{- end }}
   backoffLimit: {{ .Values.backoffLimit }}
