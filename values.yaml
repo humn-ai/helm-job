@@ -5,6 +5,9 @@
 global:
   environment: []
 
+## If defined run job at the scheduled times, otherwise run job once
+schedule: "*/1 * * * *"
+
 ## Job image
 image:
   repository: "busybox"
@@ -41,8 +44,8 @@ annotations: {}
 #  - name: VAR2
 #    value: value2
 
-#serviceAccount:
-#  create: true
+serviceAccount:
+  create: false
 #  name: rideshur-web-sa
 #  annotations:
 #    eks.amazonaws.com/role-arn: arn:aws:iam::895470510842:role/humnai-dev-rideshur-webapp-role

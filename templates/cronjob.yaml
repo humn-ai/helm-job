@@ -1,0 +1,80 @@
+{{- if .Values.schedule }}
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ template "common.fullname" . }}
+  namespace: {{ .Values.namespace }}
+spec:
+  schedule: "*/1 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          serviceAccountName: {{ .Values.serviceAccount.name }}
+        {{- if .Values.imagePullSecrets }}
+          imagePullSecrets:
+          {{ .Values.imagePullSecrets | toYaml }}
+        {{- end }}
+        {{- if .Values.securityContext.runAsUser }}
+          securityContext:
+            runAsUser: {{ .Values.securityContext.runAsUser }}
+            {{- if .Values.securityContext.runAsGroup }}
+            runAsGroup: {{ .Values.securityContext.runAsGroup }}
+            {{- end }}
+            {{- if .Values.securityContext.fsGroup }}
+            fsGroup: {{ .Values.securityContext.fsGroup }}
+            {{- end }}
+        {{- end }}
+          containers:
+          - image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+            imagePullPolicy: {{ .Values.image.pullPolicy }}
+            name: {{ template "common.fullname" . }}
+            env:
+            {{- range concat (.Values.global.environment) (.Values.environment | default list)}}
+            - name: {{ .name | quote}}
+              value: {{ .value | quote }}
+            {{- end }}
+            {{- if .Values.secretEnvs }}  
+            envFrom:
+            {{- .Values.secretEnvs | toYaml | nindent 8 }}
+            {{- end }}
+            {{- if .Values.command }}
+            command:
+            {{- range .Values.command }}
+            - {{ . | quote }}
+            {{- end }}
+            {{- end }}
+            {{- if .Values.args }}
+            args:
+            {{- range .Values.args }}
+            - {{ . | quote }}
+            {{- end }}
+            {{- end }}
+            {{- with .Values.resources }}
+            resources:
+    {{ toYaml . | indent 10 }}
+            {{- end }}
+            {{- with .Values.volumeMounts }}
+            volumeMounts:
+    {{ toYaml . | indent 8 }}
+            {{- end }}
+          {{- with .Values.nodeSelector }}
+          nodeSelector:
+    {{ toYaml . | indent 8 }}
+          {{- end }}
+          {{- with .Values.affinity }}
+          affinity:
+    {{ toYaml . | indent 8 }}
+          {{- end }}
+          {{- with .Values.tolerations }}
+      tolerations:
+    {{ toYaml . | indent 8 }}
+          {{- end }}
+          restartPolicy: {{ .Values.restartPolicy }}
+          {{- with .Values.volumes }}
+          volumes:
+    {{ toYaml . | indent 6 }}
+          {{- end }}
+      backoffLimit: {{ .Values.backoffLimit }}
+{{- end }}

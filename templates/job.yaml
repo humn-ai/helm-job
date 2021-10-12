@@ -1,8 +1,9 @@
+{{- if not .Values.schedule }}
 ---
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: {{ template "common.fullname" . }}-{{ randAlphaNum 8 | lower }}
+  name: {{ template "common.fullname" . }}
   namespace: {{ .Values.namespace }}
 spec:
   {{- if .Values.ttlSecondsAfterFinished }}
@@ -76,3 +77,4 @@ spec:
 {{ toYaml . | indent 6 }}
       {{- end }}
   backoffLimit: {{ .Values.backoffLimit }}
+{{- end }}
