@@ -33,7 +33,7 @@ spec:
             env:
             {{- range concat (.Values.global.environment) (.Values.environment | default list)}}
             - name: {{ .name | quote}}
-              value: {{ .value | quote }}
+              value: {{ tpl .value $ }}
             {{- end }}
             {{- if .Values.secretEnvs }}  
             envFrom:
