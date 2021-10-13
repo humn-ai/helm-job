@@ -37,7 +37,7 @@ spec:
             {{- end }}
             {{- if .Values.secretEnvs }}  
             envFrom:
-            {{- .Values.secretEnvs | toYaml | nindent 10 }}
+            {{- .Values.secretEnvs | toYaml | nindent 12 }}
             {{- end }}
             {{- if .Values.command }}
             command:
