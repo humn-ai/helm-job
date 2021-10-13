@@ -6,7 +6,7 @@ global:
   environment: []
 
 ## If defined run job at the scheduled times, otherwise run job once
-schedule: "*/1 * * * *"
+#schedule: "*/1 * * * *"
 
 ## Job image
 image:
