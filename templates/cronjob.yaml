@@ -53,28 +53,28 @@ spec:
             {{- end }}
             {{- with .Values.resources }}
             resources:
-    {{ toYaml . | indent 10 }}
+{{ toYaml . | indent 14 }}
             {{- end }}
             {{- with .Values.volumeMounts }}
             volumeMounts:
-    {{ toYaml . | indent 8 }}
+{{ toYaml . | indent 12 }}
             {{- end }}
           {{- with .Values.nodeSelector }}
           nodeSelector:
-    {{ toYaml . | indent 8 }}
+{{ toYaml . | indent 12 }}
           {{- end }}
           {{- with .Values.affinity }}
           affinity:
-    {{ toYaml . | indent 8 }}
+{{ toYaml . | indent 12 }}
           {{- end }}
           {{- with .Values.tolerations }}
       tolerations:
-    {{ toYaml . | indent 8 }}
+{{ toYaml . | indent 12 }}
           {{- end }}
           restartPolicy: {{ .Values.restartPolicy }}
           {{- with .Values.volumes }}
           volumes:
-    {{ toYaml . | indent 6 }}
+{{ toYaml . | indent 10 }}
           {{- end }}
       backoffLimit: {{ .Values.backoffLimit }}
 {{- end }}
