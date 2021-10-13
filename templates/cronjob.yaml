@@ -6,7 +6,7 @@ metadata:
   name: {{ template "common.fullname" . }}
   namespace: {{ .Values.namespace }}
 spec:
-  schedule: "*/1 * * * *"
+  schedule: {{ .Values.schedule }}
   jobTemplate:
     spec:
       template:
