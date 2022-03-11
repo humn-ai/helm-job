@@ -1,3 +1,7 @@
+# ⚠️ Chart Deprecated 
+
+All job/cronjob deployment in Humn.ai should use [k8s-cronjob](https://github.com/humn-ai/helm-charts/tree/main/charts/k8s-cronjob) chart instead
+
 # A Helm Chart for DRY job deployments
 
 [![CircleCI](https://circleci.com/gh/cetic/helm-job.svg?style=svg)](https://circleci.com/gh/cetic/helm-job/tree/master) [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) ![version](https://img.shields.io/github/tag/cetic/helm-job.svg?label=release)
